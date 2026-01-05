@@ -1,0 +1,17 @@
+.venv
+demo.cast
+*.egg-info
+__pycache__/
+dist/
+*.pyc
+.coverage
+coverage.xml
+*_cache/
+*.cost
+*.cast
+main.py
+.idea/
+htmlcov/
+.env
+.DS_Store
+Thumbs.db
