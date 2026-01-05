@@ -5,8 +5,8 @@ import os
 
 load_dotenv()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
-@app.route('/')
+@app.route("/")
 def index():
-    return '<h1>Page Analyzer</h1>'
+    return "<h1>Page Analyzer</h1>"
