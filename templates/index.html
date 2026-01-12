@@ -1,32 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %}Page Analyzer - Главная{% endblock %}
+{% block title %}Анализатор страниц - Главная{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-8 col-lg-6">
     <div class="text-center mb-5">
-      <h1 class="display-4 fw-bold mb-4">Page Analyzer</h1>
+      <h1 class="display-4 fw-bold mb-4">Анализатор страниц</h1>
       <p class="lead mb-4">
-        Анализируйте страницы сайтов и получайте полезную информацию 
-        о заголовках, ссылках и другой структуре.
+        Бесплатно проверяйте сайты на SEO-пригодность
       </p>
     </div>
 
     <div class="card shadow">
       <div class="card-body p-5">
-        <h2 class="h4 mb-4">Начните анализ</h2>
         <form action="/" method="post" class="needs-validation" novalidate>
           <div class="mb-4">
-            <label for="url" class="form-label">URL страницы для анализа</label>
             <div class="input-group">
               <span class="input-group-text">https://</span>
-              <input 
-                type="url" 
-                class="form-control" 
-                id="url" 
-                name="url" 
-                placeholder="example.com" 
+              <input
+                type="url"
+                class="form-control"
+                id="url"
+                name="url"
+                placeholder="example.com"
                 required
               >
             </div>
@@ -34,9 +31,9 @@
               Введите корректный URL
             </div>
           </div>
-          
+
           <button type="submit" class="btn btn-primary btn-lg w-100">
-            Проанализировать
+            Проверить
           </button>
         </form>
       </div>
