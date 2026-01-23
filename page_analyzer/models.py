@@ -77,7 +77,44 @@ class URLService:
         return url
 
     def create_check_url(self, url_id):
-        pass
+        new_check_url = self.db.get_cursor(
+            "INSERT INTO url_checks (url_id) VALUES (%s) RETURNING id, created_at",
+            (url_id,),
+            fetch_all=True
+        )
+        return new_check_url
+
+    def get_checks_url(self, url_id):
+        checks_url = self.db.get_cursor(
+            "SELECT id, created_at FROM url_checks WHERE url_id = %s ORDER BY created_at DESC ",
+            (url_id,),
+            fetch_all=True)
+
+        return checks_url or []
+
+    def get_urls_with_last_check(self):
+        urls_check = self.db.get_cursor(
+            """
+            SELECT
+                urls.id,
+                urls.name,
+                urls.created_at,
+                latest.created_at as last_check_at
+            FROM urls
+            LEFT JOIN (
+                SELECT url_id, MAX(created_at) AS created_at
+                FROM url_checks
+                GROUP BY url_id
+            ) latest ON urls.id = latest.url_id
+            ORDER BY urls.created_at DESC
+            """, fetch_all=True
+        )
+
+        return urls_check
+
+
+
+
 
 
 
