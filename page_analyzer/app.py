@@ -23,23 +23,27 @@ def urls():
         flash(message, 'danger' if not success else 'success')
 
         if success and url_id:
-            return redirect(url_for('url', url_id=url_id))
+            return redirect(url_for('url', id=url_id))
         return redirect(url_for("index"))
 
-    return render_template('urls.html', urls=url_service.get_urls())
+    return render_template('urls.html', urls=url_service.get_urls_with_last_check())
 
 
 
-@app.route("/urls/<int:url_id>")
-def url(url_id):
-    url_data = url_service.get_url_by_id(url_id)
+@app.route("/urls/<int:id>")
+def url(id):
+    url_data = url_service.get_url_by_id(id)
     if not url_data:
         return redirect(url_for('urls'))
-    return render_template('url.html', url=url_data)
 
-@app.route("/urls/<id>/checks")
-def check_url(url_id):
-    pass
+    checks = url_service.get_checks_url(id)
+    return render_template('url.html', url=url_data, checks=checks)
+
+@app.route("/urls/<int:id>/checks", methods=['POST'])
+def check_url(id):
+    url_service.create_check_url(id)
+    flash("Проверка создана", 'success')
+    return redirect(url_for('url', id=id))
 
 if __name__ == "__main__":
     app.run()
