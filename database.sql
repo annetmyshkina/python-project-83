@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS url_checks (
     url_id INTEGER NOT NULL REFERENCES urls(id) ON DELETE CASCADE,
     status_code INTEGER,
     h1 VARCHAR(255),
-    title VARCHAR(255) NOT NULL,
+    title VARCHAR(255),
     description VARCHAR(255),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
