@@ -6,6 +6,7 @@ import psycopg2
 from psycopg2 import OperationalError
 from psycopg2.extras import RealDictCursor
 from contextlib import contextmanager
+from page_analyzer.parser_url import get_data
 
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -14,7 +15,7 @@ class DatabaseConnection:
     def __init__(self):
         self.db = os.getenv("DATABASE_URL")
         if not self.db:
-            raise ValueError('DATABASE_URL не установлена')
+            raise ValueError("DATABASE_URL не установлена")
 
     @contextmanager
     def get_db_connection(self):
@@ -59,58 +60,86 @@ class URLService:
         )
 
         if existing:
-            return True, "Страница уже существует", existing['id']
+            return True, "Страница уже существует", existing["id"]
 
         new_url = self.db.get_cursor(
             "INSERT INTO urls (name) VALUES (%s) RETURNING id",
             (normalized_url,),
                     fetch_one=True
         )
-        return True, "Страница успешно добавлена", new_url['id']
+        return True, "Страница успешно добавлена", new_url["id"]
 
     def get_urls(self):
         urls = self.db.get_cursor("SELECT * FROM urls", fetch_all=True)
         return urls
 
     def get_url_by_id(self, url_id):
-        url = self.db.get_cursor("SELECT * FROM urls WHERE id = %s", (url_id,), fetch_one=True)
+        url = self.db.get_cursor(
+            "SELECT * FROM urls WHERE id = %s",
+            (url_id,), fetch_one=True)
         return url
 
     def create_check_url(self, url_id):
-        new_check_url = self.db.get_cursor(
-            "INSERT INTO url_checks (url_id) VALUES (%s) RETURNING id, created_at",
-            (url_id,),
-            fetch_all=True
+        url = self.get_url_by_id(url_id)
+        if not url:
+            return False
+
+        url_data = get_data(url["name"])
+        if not url_data or url_data["status_code"] >= 500:
+            return False
+
+        self.db.get_cursor(
+            """
+            INSERT INTO url_checks (url_id, status_code, h1, title, description)
+            VALUES (%s, %s, %s, %s, %s) RETURNING id, created_at
+            """,
+            (
+                url_id, url_data["status_code"],
+                url_data["h1"],
+                url_data["title"],
+                url_data["description"]),
+            fetch_one=True
         )
-        return new_check_url
+        return True
 
     def get_checks_url(self, url_id):
         checks_url = self.db.get_cursor(
-            "SELECT id, created_at FROM url_checks WHERE url_id = %s ORDER BY created_at DESC ",
+            """
+            SELECT
+                id,
+                status_code,
+                h1,
+                title,
+                description,
+                created_at
+            FROM url_checks
+            WHERE url_id = %s
+            ORDER BY created_at DESC
+            """,
             (url_id,),
             fetch_all=True)
 
         return checks_url or []
 
     def get_urls_with_last_check(self):
-        urls_check = self.db.get_cursor(
-            """
-            SELECT
-                urls.id,
-                urls.name,
-                urls.created_at,
-                latest.created_at as last_check_at
-            FROM urls
-            LEFT JOIN (
-                SELECT url_id, MAX(created_at) AS created_at
-                FROM url_checks
-                GROUP BY url_id
-            ) latest ON urls.id = latest.url_id
-            ORDER BY urls.created_at DESC
-            """, fetch_all=True
-        )
+        return self.db.get_cursor("""
+                SELECT DISTINCT ON (urls.id)
+                    urls.id,
+                    urls.name,
+                    urls.created_at,
+                    checks.created_at as last_check_at,
+                    checks.status_code
+                FROM urls
+                LEFT JOIN LATERAL (
+                    SELECT status_code, created_at
+                    FROM url_checks 
+                    WHERE url_id = urls.id
+                    ORDER BY created_at DESC
+                    LIMIT 1
+                ) checks ON true
+                ORDER BY urls.id
+            """, fetch_all=True)
 
-        return urls_check
 
 
 
