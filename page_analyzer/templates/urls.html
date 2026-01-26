@@ -21,7 +21,7 @@
           <td>{{ url.id }}</td>
           <td><a href="{{ url_for('url', id=url.id) }}">{{ url.name }}</a></td>
           <td>{{ url.last_check_at.strftime('%Y-%m-%d') if url.last_check_at else '-' }}</td>
-          <td>-</td>
+          <td>{{ url.status_code or '-' }}</td>
         </tr>
         {% else %}
         <tr><td colspan="4" class="text-center">Нет данных</td></tr>
