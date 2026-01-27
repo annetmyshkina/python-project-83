@@ -28,9 +28,3 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-            args: >
-              -Dsonar.projectKey=annetmyshkina_python-project-83
-              -Dsonar.organization=annetmyshkina
-              -Dsonar.sources=.
-              -Dsonar.exclusions=**/*.txt,**/migrations/**
