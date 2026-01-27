@@ -34,5 +34,3 @@ jobs:
               -Dsonar.organization=annetmyshkina
               -Dsonar.sources=.
               -Dsonar.exclusions=**/*.txt,**/migrations/**
-              -Dsonar.analysis.mode=preview
-              -Dsonar.qualitygate.wait=false
