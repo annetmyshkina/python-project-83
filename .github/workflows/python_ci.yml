@@ -34,3 +34,4 @@ jobs:
           args: >
             -Dsonar.projectKey=annetmyshkina_python-project-83
             -Dsonar.organization=annetmyshkina
+            -Dsonar.python.version=3.12
