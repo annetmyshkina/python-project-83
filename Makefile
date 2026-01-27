@@ -20,5 +20,3 @@ check:
 fix:
 	uv run ruff check --fix .
 
-test:
-	uv run pytest
