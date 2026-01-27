@@ -30,8 +30,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
             args: >
-              -Dsonar.projectKey=annetmyshkina:python-project-83
+              -Dsonar.projectKey=annetmyshkina_python-project-83
               -Dsonar.organization=annetmyshkina
               -Dsonar.sources=code/ 
-              -Dsonar.tests=tests/
-              -Dsonar.exclusions=tests/**
+              -Dsonar.sources=.
+              -Dsonar.exclusions=**/*.txt,**/migrations/**
