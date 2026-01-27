@@ -23,3 +23,15 @@ jobs:
       - name: Run linter
         run: |
           make check
+
+      - name: SonarQubeScan
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+            args: >
+              -Dsonar.projectKey=annetmyshkina_python-project-83
+              -Dsonar.organization=annetmyshkina
+              -Dsonar.python.coverage.reportPaths=coverage.xml
+              -Dsonar.coverage.exclusions=tests/**
+              -Dsonar.exclusions=tests/**
