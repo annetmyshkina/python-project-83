@@ -60,7 +60,7 @@ class URLService:
         )
 
         if existing:
-            return False, "Страница уже существует", existing["id"]
+            return True, "Страница уже существует", existing["id"]
 
         new_url = self.db.get_cursor(
             "INSERT INTO urls (name) VALUES (%s) RETURNING id",
