@@ -32,5 +32,6 @@ jobs:
             args: >
               -Dsonar.projectKey=annetmyshkina:python-project-83
               -Dsonar.organization=annetmyshkina
-              -Dsonar.coverage.exclusions=tests/**
+              -Dsonar.sources=code/ 
+              -Dsonar.tests=tests/
               -Dsonar.exclusions=tests/**
