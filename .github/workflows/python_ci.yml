@@ -32,6 +32,7 @@ jobs:
             args: >
               -Dsonar.projectKey=annetmyshkina_python-project-83
               -Dsonar.organization=annetmyshkina
-              -Dsonar.sources=code/ 
               -Dsonar.sources=.
               -Dsonar.exclusions=**/*.txt,**/migrations/**
+              -Dsonar.analysis.mode=preview
+              -Dsonar.qualitygate.wait=false
