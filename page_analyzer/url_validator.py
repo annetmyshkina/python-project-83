@@ -13,7 +13,7 @@ def normalize_url(url_name):
     if not (parsed.scheme and parsed.netloc):
         return False, "Некорректный URL"
 
-    if parsed.scheme not in ('http', 'https'):
+    if parsed.scheme not in ("http", "https"):
         return False, "Некорректный URL"
 
     domain = f"{parsed.scheme}://{parsed.netloc}"
