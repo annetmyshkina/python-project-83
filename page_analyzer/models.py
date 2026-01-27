@@ -11,6 +11,7 @@ from page_analyzer.parser_url import get_data
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+
 class DatabaseConnection:
     def __init__(self):
         self.db = os.getenv("DATABASE_URL")
