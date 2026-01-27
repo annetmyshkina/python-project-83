@@ -24,7 +24,7 @@ def urls():
 
         if success and url_id:
             return redirect(url_for("url", id=url_id))
-        return redirect(url_for("index"))
+        return render_template("index.html"), 422
 
     return render_template("urls.html", urls=url_service.get_urls_with_last_check())
 
