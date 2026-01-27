@@ -42,7 +42,7 @@ def url(id):
 @app.route("/urls/<int:id>/checks", methods=["POST"])
 def check_url(id):
     if url_service.create_check_url(id):
-        flash("Проверка успешно создана", "success")
+        flash("Страница успешно проверена", "success")
     else:
         flash("Произошла ошибка при проверке", "danger")
 
