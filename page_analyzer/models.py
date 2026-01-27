@@ -43,6 +43,7 @@ class DatabaseConnection:
             else:
                 return curs.rowcount
 
+
 class URLService:
     def __init__(self):
         self.db = DatabaseConnection()

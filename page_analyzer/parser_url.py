@@ -1,10 +1,11 @@
 from requests import get, RequestException
 from bs4 import BeautifulSoup
 
+
 def get_data(url):
     data = {}
     try:
-        response = get(url,  timeout=10)
+        response = get(url, timeout=10)
         response.encoding = "utf-8"
         soup = BeautifulSoup(response.text, "lxml")
 
@@ -17,7 +18,9 @@ def get_data(url):
         data["h1"] = h1_tag.get_text(strip=True) if h1_tag else None
 
         desc_tag = soup.find("meta", attrs={"name": "description"})
-        data["description"] = desc_tag.get("content", "").strip() if desc_tag else None
+        data["description"] = desc_tag.get(
+            "content",
+            "").strip() if desc_tag else None
         return data
 
     except RequestException as e:
