@@ -22,7 +22,7 @@ def urls():
 
         flash(message, "danger" if not success else "success")
 
-        if success and url_id:
+        if url_id:
             return redirect(url_for("url", id=url_id))
         return render_template("index.html"), 422
 
