@@ -3,7 +3,10 @@ from urllib.parse import urlparse
 
 
 def normalize_url(url_name):
-    if len(url_name) > 255 or not url(url_name):
+    if not url(url_name):
+        return False, "URL обязателен"
+
+    if len(url_name) > 255:
         return False, "Некорректный URL"
 
     parsed = urlparse(url_name)
