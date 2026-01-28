@@ -1,5 +1,6 @@
-from validators import url
 from urllib.parse import urlparse
+
+from validators import url
 
 
 def normalize_url(url_name):

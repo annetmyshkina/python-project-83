@@ -1,12 +1,14 @@
 
-from page_analyzer.url_validator import normalize_url
-from dotenv import load_dotenv
 import os
+from contextlib import contextmanager
+
 import psycopg2
+from dotenv import load_dotenv
 from psycopg2 import OperationalError
 from psycopg2.extras import RealDictCursor
-from contextlib import contextmanager
+
 from page_analyzer.parser_url import get_data
+from page_analyzer.url_validator import normalize_url
 
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")

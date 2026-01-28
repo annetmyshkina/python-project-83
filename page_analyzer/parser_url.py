@@ -1,5 +1,5 @@
-from requests import get, RequestException
 from bs4 import BeautifulSoup
+from requests import RequestException, get
 
 
 def get_data(url):

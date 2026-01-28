@@ -1,7 +1,9 @@
-from flask import Flask, render_template, flash, request, redirect, url_for
-from page_analyzer.models import URLService
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+from flask import Flask, flash, redirect, render_template, request, url_for
+
+from page_analyzer.models import URLService
 
 load_dotenv()
 app = Flask(__name__)
