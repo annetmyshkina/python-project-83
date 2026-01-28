@@ -26,7 +26,7 @@ jobs:
         run: |
           make check
 
-      - name: SonarQubeScan
+      - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -36,10 +36,4 @@ jobs:
             -Dsonar.projectKey=annetmyshkina_python-project-83
             -Dsonar.organization=annetmyshkina
             -Dsonar.python.version=3.12
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-            with:
-              args: >
-                -Dsonar.projectKey=annetmyshkina_python-project-83
-                -Dsonar.organization=annetmyshkina
-                -Dsonar.python.version=3.12
-                -Dsonar.coverage.exclusions=**/*
+            -Dsonar.coverage.exclusions=**/*
