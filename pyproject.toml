@@ -27,13 +27,14 @@ build-backend = "hatchling.build"
 packages = ["page_analyzer"]
 
 [tool.ruff]
-line-length = 88
+line-length = 80
 indent-width = 4
 target-version = "py312"
 
 [tool.ruff.lint]
-select = ["E", "F", "B", "Q", "SIM", "TID", "ARG", "PTH"]
-ignore = ["B008"]  # не проверять аргументы функций
+preview = true
+select = ["E", "F", "I", "C90", "B", "Q", "SIM", "TID", "ARG", "PTH"]
+ignore = ["B008"]
 
 [tool.ruff.format]
 quote-style = "double"
